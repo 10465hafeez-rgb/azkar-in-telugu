@@ -1,4 +1,4 @@
-name: Build Flutter APK
+name: Build Android APK
 
 on:
   workflow_dispatch:
@@ -6,10 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -20,19 +16,14 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: Install Dependencies
-        run: flutter pub get
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Build APK
-        run: flutter build apk --release
+        run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Azkar-App-APK
-          path: app/build/app/outputs/flutter-apk/app-release.apk
+          path: app/build/outputs/apk/debug/*.apk
