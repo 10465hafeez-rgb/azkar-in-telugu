@@ -1,0 +1,6 @@
+{
+  "name": "Azkar In Telugu",
+  "description": "Daily morning and evening Azkar (supplications) with Arabic text, Telugu transliteration, meaning, and benefits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
