@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Azkar Flutter APK
 
 on:
   workflow_dispatch:
@@ -16,15 +16,24 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Create Fresh Flutter App
+        run: flutter create azkar_app
+
+      - name: Put Our Code in App
+        run: cp azkar.dart azkar_app/lib/main.dart
 
       - name: Build APK
-        run: gradle assembleDebug
+        run: |
+          cd azkar_app
+          flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Azkar-App-APK
-          path: app/build/outputs/apk/debug/*.apk
- 
+          name: Azkar-App-Premium
+          path: azkar_app/build/app/outputs/flutter-apk/app-release.apk
