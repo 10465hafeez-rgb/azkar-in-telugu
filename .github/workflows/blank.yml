@@ -16,14 +16,15 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Azkar-App-APK
           path: app/build/outputs/apk/debug/*.apk
+ 
